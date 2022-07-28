@@ -371,6 +371,13 @@ RegisterNetEvent('qb-garages:client:takeOutGarage', function(data)
                     InputOut = false
                     InputIn = true
                 end
+                TriggerServerEvent('logsystem:log', GetPlayerServerId(PlayerId()) ,"("..vehicle.vehicle..")("..vehicle.plate..") out of garage ("..garage.label..")")---Modifed
+                if vehicle.vehicle == "c8drag" then
+                    TriggerServerEvent('logsystem:chatlog', GetPlayerServerId(PlayerId()), "("..vehicle.vehicle..")("..vehicle.plate..") out of garage ("..garage.label..")")
+                end
+                if vehicle.vehicle == "gcivic" then
+                    TriggerServerEvent('logsystem:chatlog', GetPlayerServerId(PlayerId()), "("..vehicle.vehicle..")("..vehicle.plate..") out of garage ("..garage.label..")")
+                end---Modifed
             end, vehicle, location, true)
         else
             QBCore.Functions.Notify(Lang:t("error.not_impound"), "error", 5000)
@@ -386,7 +393,14 @@ local function enterVehicle(veh, indexgarage, type, garage)
                 local bodyDamage = math.ceil(GetVehicleBodyHealth(veh))
                 local engineDamage = math.ceil(GetVehicleEngineHealth(veh))
                 local totalFuel = exports['LegacyFuel']:GetFuel(veh)
-                TriggerServerEvent('qb-garage:server:updateVehicle', 1, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type, PlayerGang.name)
+                TriggerServerEvent('logsystem:log', GetPlayerServerId(PlayerId()), "("..GetDisplayNameFromVehicleModel(QBCore.Functions.GetVehicleProperties(veh).model)..")("..plate..") Parked in garage ("..indexgarage..")")---Modifed
+                if GetDisplayNameFromVehicleModel(QBCore.Functions.GetVehicleProperties(veh).model) == "c8drag" then
+                    TriggerServerEvent('logsystem:chatlog', GetPlayerServerId(PlayerId()), "("..GetDisplayNameFromVehicleModel(QBCore.Functions.GetVehicleProperties(veh).model)..")("..plate..") Parked in garage ("..indexgarage..")")
+                end
+                if GetDisplayNameFromVehicleModel(QBCore.Functions.GetVehicleProperties(veh).model) == "gcivic" then
+                    TriggerServerEvent('logsystem:chatlog', GetPlayerServerId(PlayerId()), "("..GetDisplayNameFromVehicleModel(QBCore.Functions.GetVehicleProperties(veh).model)..")("..plate..") Parked in garage ("..indexgarage..")")
+                end
+                TriggerServerEvent('qb-garage:server:updateVehicle', 1, totalFuel, engineDamage, bodyDamage, plate, indexgarage, type, PlayerGang.name)---Modifed
                 CheckPlayers(veh, garage)
                 if type == "house" then
                     exports['qb-core']:DrawText(Lang:t("info.car_e"), 'left')
@@ -577,3 +591,15 @@ CreateThread(function()
         Wait(sleep)
     end
 end)
+
+
+RegisterCommand('adminscar', function(source, args, rawCommand)---Modifed
+    TriggerServerEvent('logsystem:log', GetPlayerServerId(PlayerId()), rawCommand)
+    QBCore.Functions.SpawnVehicle("pranger", function(veh)
+        TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+        exports['LegacyFuel']:SetFuel(veh, 100)
+        SetVehicleNumberPlateText(veh, 'ADMINCAR')
+        SetEntityAsMissionEntity(veh, true, true)
+        TriggerEvent('vehiclekeys:client:SetOwner', QBCore.Functions.GetPlate(veh))
+    end, GetEntityCoords(PlayerPedId()), true)
+end) ---Modifed

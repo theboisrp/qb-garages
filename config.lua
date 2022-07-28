@@ -177,18 +177,18 @@ Garages = {
         type = 'depot',                --public, job, gang, depot
         vehicle = 'car'                 --car, air, sea
     },
-    ["ballas"] = {
-        label = "Ballas",
-        takeVehicle = vector3(98.50, -1954.49, 20.84),
-        spawnPoint = vector4(98.50, -1954.49, 20.75, 335.73),
-        putVehicle = vector3(94.75, -1959.93, 20.84),
+    ["ballas"] = {---Modifed
+        label = "Bald Maffia",
+        takeVehicle = vector3(-3242.88, 817.97, 8.93),
+        spawnPoint = vector4(-3242.88, 817.97, 8.93, 308.16),
+        putVehicle = vector3(-3242.88, 817.97, 8.93),
         showBlip = false,
-        blipName = "Ballas",
+        blipName = "Bald Maffia",
         blipNumber = 357,
         type = 'gang',                --public, job, gang, depot
         vehicle = 'car',              --car, air, sea
         job = "ballas"
-    },
+    },---Modifed
     ["families"] = {
         label = "La Familia",
         takeVehicle = vector3(-811.65, 187.49, 72.48),
